@@ -1,7 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict"
+const { Model } = require("sequelize")
+const { hashPass } = require("../helpers/vaildator")
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,12 +13,38 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
+  User.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          args: true,
+          msg: "This username is taken",
+        },
+        validate: {
+          notNull: { msg: "Username is required" },
+          notEmpty: { msg: "Username is required" },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Password is required" },
+          notEmpty: { msg: "Password is required" },
+        },
+      },
+    },
+    {
+      sequelize,
+      hooks: {
+        beforeBulkCreate(instance, options) {
+          instance.password = hashPass(instance.password)
+        },
+      },
+      modelName: "User",
+    }
+  )
+  return User
+}

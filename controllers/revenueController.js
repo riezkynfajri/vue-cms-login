@@ -2,7 +2,7 @@
 
 const { Revenue } = require("../models")
 
-class RevenueController {
+module.exports = class RevenueController {
   static async getRevenue(req, res, next) {
     try {
       const revenue = await Revenue.findAll()
@@ -12,5 +12,3 @@ class RevenueController {
     }
   }
 }
-
-module.exports = RevenueController
