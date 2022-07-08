@@ -4,7 +4,7 @@ const users = require("./userRoutes")
 const revenue = require("./revenueRoutes")
 
 router.get("/", (req, res) => {
-  res.send("Welcome to the API")
+  res.send("Welcome to the CMS server")
 })
 
 router.use("/users", users)
