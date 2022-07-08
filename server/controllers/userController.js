@@ -15,4 +15,25 @@ module.exports = class UserController {
       next(err)
     }
   }
+
+  static async login(req, res, next) {
+    try {
+      const { username, password } = req.body
+      const foundUser = await User.findOne({ where: { username } })
+      if (!foundUser) throw new Error("invalid")
+
+      const correctPass = comparePass(password, foundUser.password)
+      if (!correctPass) throw new Error("invalid")
+      const payload = {
+        id: foundUser.id,
+        username: foundUser.username,
+      }
+
+      const token = createToken(payload)
+      console.log(token)
+      res.status(200).json({ token })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
