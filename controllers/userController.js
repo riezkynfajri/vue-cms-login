@@ -30,7 +30,6 @@ module.exports = class UserController {
       }
 
       const token = createToken(payload)
-      console.log(token)
       res.status(200).json({ token })
     } catch (err) {
       next(err)
