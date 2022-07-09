@@ -6,11 +6,11 @@ export const useCMSStore = defineStore({
   state: () => ({
     URL: "https://vue-cms-fd.herokuapp.com/",
     signinData: {
-      email: "",
+      username: "",
       password: "",
     },
     signupData: {
-      email: "",
+      username: "",
       password: "",
     },
     signedIn: false,
@@ -20,7 +20,7 @@ export const useCMSStore = defineStore({
     move(page) {
       this.router.push(`${page}`)
     },
-    signOut() {
+    signout() {
       localStorage.clear()
       Swal.fire({
         title: "Signed out",
@@ -30,15 +30,21 @@ export const useCMSStore = defineStore({
       })
       this.signedIn = false
     },
-    async signIn() {
-      const data = await fetch(`${this.URL}/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.signinData),
-      })
-      console.log(data)
+    async signin() {
+      try {
+        const response = await fetch(`${this.URL}users/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.signinData),
+        })
+        const data = await response.json()
+        localStorage.setItem("token", data.token)
+        console.log(data.token)
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
 })
