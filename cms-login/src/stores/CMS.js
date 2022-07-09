@@ -28,6 +28,7 @@ export const useCMSStore = defineStore({
         icon: "success",
         confirmButtonText: "OK",
       })
+      this.move("/signin")
       this.signedIn = false
     },
 
@@ -48,6 +49,34 @@ export const useCMSStore = defineStore({
         localStorage.setItem("token", data.token)
         this.signinData.username = ""
         this.signinData.password = ""
+        Swal.fire({
+          title: "Signed in",
+          text: "Welcome back",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
+        this.home()
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: `${err.message}`,
+          icon: "error",
+          confirmButtonText: "OK",
+        })
+      }
+    },
+
+    async home() {
+      try {
+        const response = await fetch(`${this.URL}revenue`, {
+          headers: {
+            "Content-Type": "application/json",
+            access_token: localStorage.token,
+          },
+        })
+        const data = await response.json()
+        if (!response.ok) throw new Error(`${data.message}`)
+        this.revenue = data
         this.move("/")
       } catch (err) {
         Swal.fire({
@@ -56,7 +85,6 @@ export const useCMSStore = defineStore({
           icon: "error",
           confirmButtonText: "OK",
         })
-        console.log(err)
       }
     },
 

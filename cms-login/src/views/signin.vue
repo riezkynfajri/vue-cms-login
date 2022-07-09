@@ -25,13 +25,13 @@ export default {
       <input
         placeholder="Username"
         type="text"
-        class="w-48 mb-4 placeholder:text-sky-500 text-center outline-none border-b-2 border-white focus:border-sky-500 duration-500"
+        class="w-56 text-lg mb-4 placeholder:text-sky-500 text-center outline-none border-b-2 border-sky-500 focus:border-rose-500 duration-500"
         v-model="signinData.username"
       />
       <input
         placeholder="Password"
         type="password"
-        class="w-48 placeholder:text-sky-500 text-center outline-none border-b-2 border-white focus:border-sky-500 duration-500"
+        class="w-56 text-lg placeholder:text-sky-500 text-center outline-none border-b-2 border-sky-500 focus:border-rose-500 duration-500"
         v-model="signinData.password"
       />
       <button

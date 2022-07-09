@@ -1,7 +1,5 @@
 <script>
-import { mapWritableState, mapActions } from "pinia"
 import { RouterView } from "vue-router"
-import { useCMSStore } from "@/stores/CMS.js"
 
 export default {
   components: {
