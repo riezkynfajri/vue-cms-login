@@ -26,4 +26,29 @@ const router = createRouter({
   ],
 })
 
+router.beforeEach((to, from) => {
+  if (to.name === "signin" || to.name === "signup") {
+    if (localStorage.getItem("token")) {
+      Swal.fire({
+        title: "Already signed in",
+        text: "You are already signed in",
+        icon: "warning",
+        confirmButtonText: "OK",
+      })
+      return { name: "home" }
+    }
+  }
+  if (to.name === "home") {
+    if (!localStorage.getItem("token")) {
+      Swal.fire({
+        title: "Not signed in",
+        text: "You must be signed in to view this page",
+        icon: "warning",
+        confirmButtonText: "OK",
+      })
+      return { name: "signin" }
+    }
+  }
+})
+
 export default router

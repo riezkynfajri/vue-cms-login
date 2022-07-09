@@ -40,6 +40,13 @@ export default {
       >
         submit
       </button>
+      <p class="text-center text-zinc-600 text-base">OR</p>
+      <button
+        @click="move('/signup')"
+        class="text-center text-white bg-blue-500 h-8 w-24 rounded-md hover:scale-110 hover:text-blue-500 hover:bg-white hover:shadow-sm hover:shadow-sky-300 duration-500"
+      >
+        signup
+      </button>
     </form>
   </div>
 </template>
